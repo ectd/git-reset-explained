@@ -1,0 +1,204 @@
+C:\Users\user>pip install virtualenv
+D:\DjangoProjects>virtualenv CodingWithMitchBlogCourse
+D:\DjangoProjects>cd CodingWithMitch
+D:\DjangoProjects\CodingWithMitchBlogCourse>Scripts\activate
+(CodingWithMitchBlogCourse) D:\DjangoProjects\CodingWithMitchBlogCourse>
+
+pip install django==2.2.2
+py -m django --version
+django-admin startproject mysite
+cd src
+py manage.py runserver
+
+pip freeze
+pip freeze > requirements.txt
+pip install -r requirements.txt
+
+py manage.py startapp personal
+
+mysite/settings.py
+INSTALLED_APPS = [
+    # My Apps
+    'personal',
+	#Django Apps
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+	
+add src\templates\base.html
+	
+	<!DOCTYPE html>
+	<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>This is the header</title>
+	</head>
+
+	<body>
+		<h1>This is the body</h1>
+	</body>
+
+	<footer>
+		<h3>This is th footer</h3>
+	</footer>
+
+	</html>
+
+Pointer sur base.html
+mysite/settings.py
+
+	TEMPLATES = [
+		{
+			'BACKEND': 'django.template.backends.django.DjangoTemplates',
+			'DIRS': [os.path.join(BASE_DIR, 'templates')],
+
+
+Add views
+personal/views.py
+
+	from django.shortcuts import render
+	# Create your views here.
+	
+	def home_screen_view(request):
+		print(request.headers)
+		return render(request, "base.html", {})
+
+Add urls
+mysite/urls.py
+
+	from django.contrib import admin
+	from django.urls import path
+	from personal.views import (
+		home_screen_view,
+    )
+
+	urlpatterns = [
+		path('admin/', admin.site.urls),
+		path('', home_screen_view, name="home"),
+	]
+
+Add src/personal/template/personal/home.html
+
+	{% extends 'base.html' %}
+
+	{% block content %}
+
+	<div style="border: 2px solid #000;">
+		<h1>This is the body</h1>
+		<p>here is where you put stuff that should be in the body</p>
+	</div>	
+
+	{% endblock content %}
+	
+	
+change src\templates\base.html
+
+	
+	<body>
+	{% block content %}
+
+	{% endblock content %}
+	</body>
+
+change personal/views.py
+
+	return render(request, "personal/home.html", {})
+
+
+Add personal/template/personal/snippets/body_snippet.html
+
+	<p>This is a code snippet. I'm inserting this into a template.</p>
+	
+src/personal/template/personal/home.html	
+	
+	<div style="border: 2px solid #000;">
+		<h1>This is the body</h1>
+		<p>here is where you put stuff that should be in the body</p>
+		{% include 'personal/snippets/body_snippet.html' %}
+	</div>
+-----------------------------------------------------------------------------
+
+
+py manage.py migrate
+
+py manage.py createsuperuser
+
+personal/models.py
+
+	from django.db import models
+
+	PRIORITY =[
+		"Low",
+		"Medium",
+		"Hight",
+	]
+
+
+	class Question(model.Model):
+		title 					= models.CharField(max_length=60)
+		question 				= models.TextField(max_length=400)
+		priority				= models.CharField(max_length=1)
+
+		def __str__(self):
+			return self.title
+
+----------------------------------------------------------------
+
+Account app
+Delete migration and db.sqlite3
+	py manage.py runserver to create db.sqlite3
+	py manage.py startapp account
+	
+
+
+
+
+add models
+make migrations
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
